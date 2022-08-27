@@ -1,19 +1,23 @@
 const persistance = "MONGO";
 
-let usersService;
+let productsService;
 switch (persistance) {
     case "MEMORY":
-        const { default: MemUser } = await import('./MemoryDAO/Users.js');
-        usersService = new MemUser();
+        const { default: MemProd } = await import('./MemoryDAO/Products.js');
+        productsService = new MemProd();
         break;
     case "MONGO":
-        const { default: MongoUser } = await import('./MongoDAO/Users.js');
-        usersService = new MongoUser();
+        const { default: MongoProd } = await import('./MongoDAO/Products.js');
+        productsService = new MongoProd();
+        break;
+    case "FS":
+        const { default: FsProd } = await import('./FileSystemDAO/Products.js');
+        productsService = new FsProd();
         break;
 }
 
 const services = {
-    usersService,
+    productsService,
 }
 
 export default services;

@@ -10,7 +10,7 @@ export default class MongoDBContainer {
         let results = await this.model.find();
         return results;
     }
-    Save = async(document) => {
+    save = async(document) => {
         let results = await this.model.create(document);
         return results;
     }

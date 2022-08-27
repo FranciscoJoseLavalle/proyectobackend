@@ -1,12 +1,14 @@
 export default class MemoryContainer {
-    constructor() {
-        this.data = [];
+    constructor(type) {
+        this.type = type;
+        this.dataProducts = [];
+        this.dataMessages = [];
     }
     getAll = () => {
-        return this.data;
+        return this.dataProducts;
     }
-    Save = (element) => {
-        this.data.push(element);
+    save = (element) => {
+        this.dataProducts.push(element);
         return element;
     }
 }

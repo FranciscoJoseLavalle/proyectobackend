@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
 import MongoDBContainer from "./MongoDBContainer.js";
 
-const collection = 'users';
+const collection = 'products';
 const userSchema = mongoose.Schema({
-    name: String,
-    last_name: String
+        name: String,
+        description: String,
+        code: String,
+        thumbnail: String,
+        price: Number,
+        stock: Number
 })
 
 export default class Users extends MongoDBContainer{
