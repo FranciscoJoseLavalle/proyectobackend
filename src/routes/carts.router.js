@@ -45,8 +45,8 @@ router.post('/:cid/products', async (req, res) => {
     let pid = req.body;
     await services.cartsService.editById(cid, pid);
     let cart = await services.cartsService.getById(cid);
-    await services.cartsService.findItem(cart, pid)
-    console.log(await services.cartsService.findItem(cart, pid));
+    await services.cartsService.addProduct(cart, pid)
+    console.log(await services.cartsService.addProduct(cart, pid));
     // console.log(cart);
     res.send(cart)
 })
@@ -56,13 +56,14 @@ router.delete('/:cid', async (req, res) => {
     await services.cartsService.deleteById(cid)
     res.send({ message: "cart deleted succesfully" })
 })
-// router.delete('/:cid/products/:pid', async (req, res) => {
-//     let cid = req.params.cid;
-//     let pid = req.params.pid;
-//     await cartsFile.editById(cid, pid, 'deleteProduct')
-//     let cart = await cartsFile.getById(cid);
-//     console.log(cart.products);
-//     res.send({ message: "product deleted succesfully" })
-// })
+router.delete('/:cid/products/:pid', async (req, res) => {
+    let cid = req.params.cid;
+    let pid = req.params.pid;
+    // await services.cartsService.editById(cid, pid, 'deleteProduct')
+    let cart = await services.cartsService.getById(cid);
+    await services.cartsService.deleteProduct(cart, pid)
+    console.log(cart.products);
+    res.send({ message: "product deleted succesfully" })
+})
 
 export default router;
