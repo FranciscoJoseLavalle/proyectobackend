@@ -8,7 +8,8 @@ const userSchema = mongoose.Schema({
         code: String,
         thumbnail: String,
         price: Number,
-        stock: Number
+        stock: Number,
+        timestamp: Number
 })
 
 export default class Users extends MongoDBContainer{

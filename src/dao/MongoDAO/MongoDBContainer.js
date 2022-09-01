@@ -10,8 +10,27 @@ export default class MongoDBContainer {
         let results = await this.model.find();
         return results;
     }
+    getById = async(id) => {
+        try {
+            let results = await this.model.find({_id: id});
+            return results;
+        } catch (error) {
+            console.log(error);
+            return error
+        }
+    }
     save = async(document) => {
+        document.timestamp = Date.now();
         let results = await this.model.create(document);
+        return results;
+    }
+    editById = async(id, document) => {
+        let results = await this.model.findOneAndUpdate({_id: id}, document)
+        
+        return results;
+    }
+    deleteById = async(id) => {
+        let results = await this.model.deleteOne({_id: id})
         return results;
     }
 }
