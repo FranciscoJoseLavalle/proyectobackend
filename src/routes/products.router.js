@@ -3,6 +3,13 @@ import services from '../dao/index.js';
 
 const router = Router();
 
+const adminMiddleware = async(req,res,next) => {
+    let admin = true;
+    if (admin == true) {
+        next();
+    }
+}
+
 router.get('/', async (req, res) => {
     let products = await services.productsService.getAll();
     console.log(products);
@@ -16,14 +23,14 @@ router.get('/:pid', async (req, res) => {
     res.send(product);
 })
 
-router.post('/', async (req, res) => {
+router.post('/', adminMiddleware,async (req, res) => {
     let product = await req.body;
     let result = await services.productsService.save(product)
     console.log(result);
     res.send({ status: "success, new product added" })
 })
 
-router.put('/:pid/', async (req, res) => {
+router.put('/:pid/', adminMiddleware,async (req, res) => {
     let pid = req.params.pid;
     let productData = await req.body;
     let product = await services.productsService.editById(pid, productData);
@@ -31,7 +38,7 @@ router.put('/:pid/', async (req, res) => {
     res.send({ status: "completed" })
 })
 
-router.delete('/:pid/', async (req, res) => {
+router.delete('/:pid/', adminMiddleware,async (req, res) => {
     let pid = req.params.pid;
     await services.productsService.deleteById(pid);
     res.send({ status: "completed" })
