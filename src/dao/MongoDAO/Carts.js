@@ -30,7 +30,7 @@ export default class Users extends MongoDBContainer {
     deleteProduct = async (object, pid) => {
         let cart = await this.model.find({_id: object[0]._id}, {products: 1});
         let productsInCart = cart[0].products;
-        cart[0].products = cart[0].products.find(item => item.pid !== pid.pid);
+        cart[0].products = cart[0].products.filter(item => item.pid != pid);
 
         await this.model.updateOne({_id: object[0]._id}, {$set: {products: cart[0].products}})
         // await cart.save();

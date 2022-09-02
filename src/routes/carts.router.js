@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import File from '../classes/file.js';
-let cartsFile = new File("carts");
-let productsFile = new File("products");
+// import File from '../classes/file.js';
+// let cartsFile = new File("carts");
+// let productsFile = new File("products");
 import services from '../dao/index.js';
 
 const router = Router();
@@ -17,11 +17,12 @@ router.get('/:cid/products', async (req, res) => {
 
     let products = [];
 
-    if (cart.products !== []) {
+    if (cart.products !== undefined) {
         for (let i = 0; i < cart.products.length; i++) {
             products.push(await services.productsService.getById(cart.products[i].pid))
         }
-    } else {
+    }
+    if (cart.products == undefined) {
         for (let i = 0; i < cart[0].products.length; i++) {
             products.push(await services.productsService.getById(cart[0].products[i].pid))
         }
@@ -42,7 +43,7 @@ router.post('/', async (req, res) => {
     }
     let cartID = await services.cartsService.save(cart);
     console.log(cartID);
-    res.send(cartID);
+    res.send({ message: "Added succesfully" });
 })
 
 
