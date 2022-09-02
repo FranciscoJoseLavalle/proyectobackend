@@ -17,8 +17,14 @@ router.get('/:cid/products', async (req, res) => {
 
     let products = [];
 
-    for (let i = 0; i < cart[0].products.length; i++) {
-        products.push(await services.productsService.getById(cart[0].products[i].pid))
+    if (cart.products !== []) {
+        for (let i = 0; i < cart.products.length; i++) {
+            products.push(await services.productsService.getById(cart.products[i].pid))
+        }
+    } else {
+        for (let i = 0; i < cart[0].products.length; i++) {
+            products.push(await services.productsService.getById(cart[0].products[i].pid))
+        }
     }
 
     if (products.length > 0) {
@@ -43,10 +49,9 @@ router.post('/', async (req, res) => {
 router.post('/:cid/products', async (req, res) => {
     let cid = req.params.cid;
     let pid = req.body;
-    await services.cartsService.editById(cid, pid);
+    // await services.cartsService.editById(cid, pid);
     let cart = await services.cartsService.getById(cid);
     await services.cartsService.addProduct(cart, pid)
-    console.log(await services.cartsService.addProduct(cart, pid));
     // console.log(cart);
     res.send(cart)
 })

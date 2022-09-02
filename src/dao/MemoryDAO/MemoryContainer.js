@@ -2,13 +2,7 @@ export default class MemoryContainer {
     constructor(type) {
         this.type = type;
         this.count = 0;
-        this.dataProducts = [];
-        this.dataMessages = [];
-        if(type == "products") {
-            this.data = this.dataProducts;
-        } else if (type == "messages") {
-            this.data = this.dataMessages;
-        }
+        this.data = [];
         
     }
     getAll = () => {
